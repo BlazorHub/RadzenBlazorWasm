@@ -1,0 +1,49 @@
+﻿@inherits Sde3.Layouts.MainLayoutComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Sde3.Models.Sde
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+<RadzenHeader>
+  <ChildContent>
+    <div class="row justify-content-start align-items-center">
+      <div class="col-6 d-flex align-items-center">
+        <RadzenSidebarToggle Click="@SidebarToggle0Click">
+        </RadzenSidebarToggle>
+        <RadzenLabel Text="SDE3">
+        </RadzenLabel>
+      </div>
+      <div class="col-6 text-right">
+      </div>
+    </div>
+  </ChildContent>
+</RadzenHeader>
+<RadzenBody @ref="body0">
+  <ChildContent>
+    <RadzenContentContainer Name="main">
+    @Body
+    </RadzenContentContainer>
+  </ChildContent>
+</RadzenBody>
+<RadzenSidebar @ref="sidebar0">
+  <ChildContent>
+    <RadzenPanelMenu style="height: 100%">
+      <ChildContent>
+        <RadzenPanelMenuItem Text="Extracts" Path="extracts">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Text="Parameters" Path="parameters">
+        </RadzenPanelMenuItem>
+      </ChildContent>
+    </RadzenPanelMenu>
+  </ChildContent>
+</RadzenSidebar>
+<RadzenFooter>
+  <ChildContent>
+    <RadzenLabel Text="SDE3, Copyright Ⓒ 2021">
+    </RadzenLabel>
+  </ChildContent>
+</RadzenFooter>

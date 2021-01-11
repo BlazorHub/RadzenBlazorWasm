@@ -1,0 +1,31 @@
+{
+  "dataSources": [
+    "SDE"
+  ],
+  "generator": "@radzen/blazor-server",
+  "https": false,
+  "layouts": [
+    "Login",
+    "Main"
+  ],
+  "logo": "",
+  "name": "SDE3",
+  "navigation": [
+    "Extracts",
+    "Parameters"
+  ],
+  "pages": [
+    "Extracts",
+    "Add Extract",
+    "Edit Extract",
+    "Parameters",
+    "Add Parameter",
+    "Edit Parameter"
+  ],
+  "serverLang": "cs",
+  "serverProject": true,
+  "serverVersion": "5",
+  "startPage": "Extracts",
+  "theme": "default",
+  "wasm": true
+}

@@ -1,0 +1,440 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Extract"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-extract",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "filterMode": "advanced",
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getExtractsResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "name": "SDE.getExtracts",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": [
+                              {
+                                "filters": [
+                                  {
+                                    "operation": "contains",
+                                    "property": "Name",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "Description",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "ExternalCode",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  }
+                                ],
+                                "operator": "or"
+                              },
+                              {
+                                "value": "${(string.IsNullOrEmpty(event.filter)? \"true\" : event.filter)}"
+                              }
+                            ],
+                            "operator": "and"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getExtractsResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<Sde3.Models.Sde.Extract>"
+                          },
+                          {
+                            "name": "getExtractsCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke",
+                        "error": [
+                          {
+                            "detail": "Unable to load Extracts",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "ExtractId",
+                            "value": "${event.ExtractId}"
+                          }
+                        ],
+                        "path": "edit-extract",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowExpand": [
+                      {
+                        "name": "master",
+                        "type": "set",
+                        "value": "${event}"
+                      },
+                      {
+                        "name": "SDE.getParameters",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "ExtractId eq ${event.ExtractId}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "execute",
+                            "condition": "",
+                            "code": "event.Parameters = ${result}.Value"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "ExtractId",
+                      "title": "Extract Id"
+                    },
+                    {
+                      "property": "Name",
+                      "title": "Name"
+                    },
+                    {
+                      "property": "Description",
+                      "title": "Description"
+                    },
+                    {
+                      "property": "ExternalCode",
+                      "title": "External Code"
+                    },
+                    {
+                      "property": "IsActive",
+                      "title": "Is Active"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete Extract",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "SDE.deleteExtract",
+                                "parameters": [
+                                  {
+                                    "name": "ExtractId",
+                                    "value": "${data.ExtractId}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "await grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "grid",
+                  "count": "${getExtractsCount}",
+                  "itemType": "Sde3.Models.Sde.Extract",
+                  "template": [
+                    {
+                      "name": "heading1",
+                      "size": "H1",
+                      "text": "Parameters",
+                      "type": "heading"
+                    },
+                    {
+                      "icon": "add_circle_outline",
+                      "name": "ParameterAddButton",
+                      "style": {
+                        "marginBottom": "10px"
+                      },
+                      "text": "Add",
+                      "type": "button",
+                      "events": {
+                        "click": [
+                          {
+                            "path": "add-parameter",
+                            "type": "popup",
+                            "parameters": [
+                              {
+                                "name": "ExtractId",
+                                "type": "integer",
+                                "value": "${data.ExtractId}"
+                              }
+                            ],
+                            "then": [
+                              {
+                                "code": "await grid1.Reload();",
+                                "type": "execute"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "name": "grid1",
+                      "data": "${data.Parameters}",
+                      "columns": [
+                        {
+                          "property": "ParameterId",
+                          "title": "Parameter Id"
+                        },
+                        {
+                          "property": "ExtractId",
+                          "sortProperty": "Extract.Name",
+                          "filterProperty": "Extract.Name",
+                          "template": "${data.Extract?.Name}",
+                          "title": "Extract"
+                        },
+                        {
+                          "property": "Name",
+                          "title": "Name"
+                        },
+                        {
+                          "property": "Alias",
+                          "title": "Alias"
+                        },
+                        {
+                          "property": "Description",
+                          "title": "Description"
+                        },
+                        {
+                          "filterable": false,
+                          "sortable": false,
+                          "width": "70px",
+                          "textAlign": "center",
+                          "template": [
+                            {
+                              "attributes": [
+                                {
+                                  "name": "@onclick:stopPropagation",
+                                  "value": true
+                                }
+                              ],
+                              "buttonStyle": "danger",
+                              "icon": "close",
+                              "name": "ParameterDeleteButton",
+                              "text": "",
+                              "size": "sm",
+                              "type": "button",
+                              "events": {
+                                "click": [
+                                  {
+                                    "error": [
+                                      {
+                                        "detail": "Unable to delete Extract",
+                                        "severity": "error",
+                                        "summary": "Error",
+                                        "type": "notify"
+                                      }
+                                    ],
+                                    "name": "SDE.deleteParameter",
+                                    "parameters": [
+                                      {
+                                        "name": "ParameterId",
+                                        "value": "${data.ParameterId}"
+                                      }
+                                    ],
+                                    "then": [
+                                      {
+                                        "code": "await grid1.Reload();",
+                                        "condition": "result != null",
+                                        "type": "execute"
+                                      }
+                                    ],
+                                    "type": "invoke"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "type": "grid",
+                      "allowFiltering": true,
+                      "allowPaging": true,
+                      "allowSorting": true,
+                      "events": {
+                        "rowSelect": [
+                          {
+                            "parameters": [
+                              {
+                                "name": "ParameterId",
+                                "value": "${event.ParameterId}"
+                              }
+                            ],
+                            "path": "edit-parameter",
+                            "type": "popup",
+                            "then": [
+                              {
+                                "code": "await grid1.Reload();",
+                                "type": "execute"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "itemType": "Sde3.Models.Sde.Parameter",
+                      "filterMode": "advanced"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "name": "Extract",
+  "layout": "Main"
+}

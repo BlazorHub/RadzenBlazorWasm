@@ -76,29 +76,29 @@ using Sde3.Client.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\src\Radzen\SDE3\client\Pages\AddParameter.razor"
+#line 5 "C:\src\Radzen\SDE3\client\Pages\Extract.razor"
 using Radzen;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "C:\src\Radzen\SDE3\client\Pages\AddParameter.razor"
+#line 6 "C:\src\Radzen\SDE3\client\Pages\Extract.razor"
 using Radzen.Blazor;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "C:\src\Radzen\SDE3\client\Pages\AddParameter.razor"
+#line 7 "C:\src\Radzen\SDE3\client\Pages\Extract.razor"
 using Sde3.Models.Sde;
 
 #line default
 #line hidden
 #nullable disable
     [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))]
-    [Microsoft.AspNetCore.Components.RouteAttribute("/add-parameter/{ExtractId}")]
-    public partial class AddParameter : Sde3.Pages.AddParameterComponent
+    [Microsoft.AspNetCore.Components.RouteAttribute("/extract")]
+    public partial class Extract : Sde3.Pages.ExtractComponent
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)

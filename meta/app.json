@@ -12,7 +12,8 @@
   "name": "SDE3",
   "navigation": [
     "Extracts",
-    "Parameters"
+    "Parameters",
+    "Extract"
   ],
   "pages": [
     "Extracts",
@@ -20,7 +21,8 @@
     "Edit Extract",
     "Parameters",
     "Add Parameter",
-    "Edit Parameter"
+    "Edit Parameter",
+    "Extract"
   ],
   "serverLang": "cs",
   "serverProject": true,

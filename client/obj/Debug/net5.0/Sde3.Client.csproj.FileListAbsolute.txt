@@ -640,3 +640,5 @@ C:\src\Radzen\SDE3\client\obj\Debug\net5.0\Sde3.Client.csproj.CopyComplete
 C:\src\Radzen\SDE3\client\obj\Debug\net5.0\Sde3.Client.dll
 C:\src\Radzen\SDE3\client\obj\Debug\net5.0\ref\Sde3.Client.dll
 C:\src\Radzen\SDE3\client\obj\Debug\net5.0\Sde3.Client.pdb
+C:\src\Radzen\SDE3\client\obj\Debug\net5.0\RazorDeclaration\Pages\Extract.razor.g.cs
+C:\src\Radzen\SDE3\client\obj\Debug\net5.0\Razor\Pages\Extract.razor.g.cs

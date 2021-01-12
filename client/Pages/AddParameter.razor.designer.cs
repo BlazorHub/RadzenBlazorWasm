@@ -47,6 +47,9 @@ namespace Sde3.Pages
         [Inject]
         protected SdeService Sde { get; set; }
 
+        [Parameter]
+        public dynamic ExtractId { get; set; }
+
         IEnumerable<Sde3.Models.Sde.Extract> _getExtractsForExtractIdResult;
         protected IEnumerable<Sde3.Models.Sde.Extract> getExtractsForExtractIdResult
         {
